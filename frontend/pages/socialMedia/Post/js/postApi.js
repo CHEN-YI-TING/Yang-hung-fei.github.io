@@ -1,14 +1,15 @@
 import config from "../../../../../ipconfig.js";
 const hostUrl = config.url;
 const userPostUrl = hostUrl + "/user/social/post";
-const userToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwiZXhwIjoxNjk0NjMwNjMwfQ.n7GVmpW_Bp7lv0ymXgu6DYOrNEV26JbidvipXJTabbA";
+const userToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1IiwiZXhwIjoxNjk1Mjg5ODkyfQ.uVsQThsy5bUAObnS5F2MaKV1cZvRzRh4wBMGDT3hX38";
+// const userToken = localStorage.getItem("Authorization_U");
 
 //create post
 async function createPost(postData) {
     return fetch(userPostUrl, {
         method: "POST",
         headers: {
-            Authorization_M: userToken,
+            Authorization_U: userToken,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(postData),
@@ -29,7 +30,7 @@ async function editPost(postId, putData) {
     return fetch(userPostUrl + `/${postId}`, {
         method: "PUT",
         headers: {
-            Authorization_M: userToken,
+            Authorization_U: userToken,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(putData),
@@ -49,7 +50,7 @@ async function deletePost(postId) {
     return fetch(userPostUrl + `/${postId}`, {
         method: "DELETE",
         headers: {
-            Authorization_M: userToken,
+            Authorization_U: userToken,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(putData),
@@ -69,14 +70,16 @@ async function getAllPost() {
     return fetch(userPostUrl + "/all", {
         method: "GET",
         headers: {
-            Authorization_M: userToken,
+            Authorization_U: userToken,
             "Content-Type": "application/json"
         },
     })
         .then(res => {
             return res.json();
         }).then(data => {
+            console.log(data);
             return data;
+
         })
         .catch(err => {
             console.error(err.message);
@@ -88,7 +91,7 @@ async function getPostDetails(postId) {
     return fetch(userPostUrl + `/${postId}`, {
         method: "GET",
         headers: {
-            Authorization_M: userToken,
+            Authorization_U: userToken,
             "Content-Type": "application/json"
         },
     })
@@ -107,8 +110,8 @@ async function uploadPostFiles(postId) {
     return fetch(userPostUrl + `/${postId}/upload`, {
         method: "POST",
         headers: {
-            Authorization_M: userToken,
-            "Content-Type": "application/json"
+            Authorization_U: userToken,
+            'Content-Type': 'multipart/form-data'
         },
     })
         .then(res => {
@@ -126,7 +129,7 @@ async function getPostFiles(postId) {
     return fetch(userPostUrl + `/${postId}/files`, {
         method: "GET",
         headers: {
-            Authorization_M: userToken,
+            Authorization_U: userToken,
             "Content-Type": "application/json"
         },
     })
@@ -150,7 +153,7 @@ async function createPostTags(postId, postTags) {
     return fetch(userPostUrl + `/${postId}/tags`, {
         method: "GET",
         headers: {
-            Authorization_M: userToken,
+            AAuthorization_U: userToken,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(postTags),
@@ -170,7 +173,7 @@ async function deletePostTags(postId, deletePostTags) {
     return fetch(userPostUrl + `/${postId}/tags`, {
         method: "DELETE",
         headers: {
-            Authorization_M: userToken,
+            Authorization_U: userToken,
             "Content-Type": "application/json"
         },
         body: JSON.stringify(deletePostTags),
@@ -190,7 +193,7 @@ async function getPostTags(postId) {
     return fetch(userPostUrl + `/${postId}/tags`, {
         method: "GET",
         headers: {
-            Authorization_M: userToken,
+            Authorization_U: userToken,
             "Content-Type": "application/json"
         },
     })
@@ -212,7 +215,7 @@ async function getPostsByTagName(tagName) {
     return fetch(userPostUrl + "/posts" + params.toString(), {
         method: "GET",
         headers: {
-            Authorization_M: userToken,
+            Authorization_U: userToken,
             "Content-Type": "application/json"
         },
     })
